@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Varmetilførsel v1.0 | Sveiseteknisk Presisjon</title>
     <style>
-        /* Importerer Geist Mono (eller lignende monospace fra Google Fonts) */
+        /* Importerer font */
         @import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
 
         :root {
@@ -15,7 +15,7 @@
             --font-stack: 'Space Mono', 'Courier New', monospace;
         }
 
-        /* Moderne Mørkt Tema (Når JS aktiverer dette) */
+        /* Moderne Mørkt Tema */
         body.modern-theme {
             --bg-color: #121212;
             --main-color: #E0E0E0;
@@ -32,7 +32,7 @@
             transition: background-color 0.3s, color 0.3s;
         }
 
-        /* CRT / Scanline Effekt med CSS */
+        /* CRT / Scanline Effekt */
         .crt::before {
             content: " ";
             display: block;
@@ -53,6 +53,36 @@
             padding: 60px 20px;
             position: relative;
             z-index: 1;
+        }
+
+        /* --- LOGO PLACEHOLDER STIL --- */
+        .logo-placeholder {
+            width: 120px;
+            height: 120px;
+            border: 2px dashed var(--main-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 0.9em;
+            margin-bottom: 30px;
+            box-shadow: 0 0 15px rgba(51, 255, 77, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        /* Endrer logo-rammen i moderne tema */
+        body.modern-theme .logo-placeholder {
+            border: 2px solid var(--main-color);
+            border-radius: 20px;
+            box-shadow: none;
+        }
+        
+        /* For når du bytter ut med en faktisk bilde-logo senere */
+        .real-logo {
+            max-width: 120px;
+            height: auto;
+            margin-bottom: 30px;
+            display: none; /* Skjult inntil du legger inn bilde */
         }
 
         /* Typografi */
@@ -142,6 +172,13 @@
 <body class="crt">
     <div class="container">
         <header>
+            <!-- LOGO PLACEHOLDER -->
+            <!-- Når du har en logo, kommenter ut div-en under, og bruk img-taggen -->
+            <div class="logo-placeholder">
+                [ LOGO ]<br>HeatInputQ
+            </div>
+            <!-- <img src="din-logo-fil.png" alt="HeatInput Logo" class="real-logo"> -->
+
             <h1 id="main-title"><span class="cursor"></span></h1>
             <p>Sveiseteknisk presisjon for ditt Kotlin Multiplatform-verktøy. Kodelogikk fra fortiden.</p>
             
@@ -184,4 +221,33 @@
         // 1. Skrivemaskin-effekt for hovedoverskriften
         const textElement = document.getElementById('main-title');
         const textToType = "> VARMETILFØRSEL v1.0";
-        let
+        let i = 0;
+        
+        function typeWriter() {
+            if (i < textToType.length) {
+                textElement.innerHTML = textToType.substring(0, i+1) + '<span class="cursor"></span>';
+                i++;
+                setTimeout(typeWriter, 80); 
+            }
+        }
+        
+        window.onload = typeWriter;
+
+        // 2. Bytt mellom Retro (CRT) og Moderne tema
+        function toggleTheme() {
+            const body = document.body;
+            const button = document.getElementById('toggle-btn');
+            
+            body.classList.toggle('modern-theme');
+            
+            if(body.classList.contains('modern-theme')) {
+                body.classList.remove('crt');
+                button.innerText = '[ BYTT TIL RETRO TEMA ]';
+            } else {
+                body.classList.add('crt');
+                button.innerText = '[ BYTT TIL MODERNE TEMA ]';
+            }
+        }
+    </script>
+</body>
+</html>
