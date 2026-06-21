@@ -240,6 +240,19 @@ font-size: calc(var(--logo-size) * 0.85);
             text-shadow: 0 0 5px var(--main-color);
         }
 
+        /* Gjenbrukbar responsiv bildeklasse - kan brukes på flere bilder */
+        .responsive-img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            max-height: 80vh;
+            width: min(720px, calc(var(--logo-size) * 2.8));
+            margin: 18px auto;
+            border-radius: 6px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+            object-fit: contain;
+        }
+
         footer {
             text-align: center;
             border-top: 1px dashed var(--dim-color);
@@ -269,29 +282,34 @@ font-size: calc(var(--logo-size) * 0.85);
         </header>
 
         <section id="hvorfor" style="margin-top: 60px;">
-            <h2>> SYSTEMDIAGNOSE_</h2>
-            <p>Slutt å gjette på varmetilførselen. Slutt å rote med papirskjemaer i verkstedet. Appen gir deg øyeblikkelig kontroll på bueenergi og varmetilførsel i et grensesnitt som tåler mørket i sveisehjelmen.</p>
+            <h2>> Key Features_</h2>
+            <p>Easy input calculation</p>
+            <img src="bilder/formelfelt.png" alt="Formelfelt" class="responsive-img">
+            <p>Optional pass data: filler, gas, polarity etc.</p>
+            <img src="bilder/strengdata.png" alt="Formelfelt" class="responsive-img">
+            <p>Documentation sent directly to your computer.</p>
+            <img src="bilder/sharingcaring.png" alt="Formelfelt" class="responsive-img">
         </section>
 
         <section id="funksjoner">
-            <h2>> FUNKSJONER_</h2>
+            <h2>> Functions_</h2>
             <ul class="feature-list">
-                <li><strong>SANNTIDS STOPPEKLOKKE:</strong> Integrert timer. Start klokken når buen tennes, stopp når den slukkes. Appen beregner automatisk sveisehastighet.</li>
-                <li><strong>FULL LOGGFØRING:</strong> Loggfør alle parametere: Spenning (U), Strøm (I), Tid (T), Lengde (L), K-faktor og interpass-temperatur.</li>
-                <li><strong>ISO STANDARDISERT:</strong> Beregner Varmetilførsel etter ISO 17671 og Bueenergi etter ISO/TR 18491.</li>
-                <li><strong>DATA EKSPORT:</strong> Eksportér jobbloggen din direkte for solid dokumentasjon.</li>
+                <li><strong>STOPWATCH:</strong> Integrated stopwatch. Start the stopwatch when the arc is struck and stop it when the arc is extinguished. The app calculates the welding speed based on the provided length.</li>
+                <img src="bilder/stoppeklokke.png" alt="Formelfelt" class="responsive-img">
+                <li><strong>LOGGING:</strong> Record and log parameters: Voltage (U), Current (I), Time (T), Length (L), K-factor, and interpass temperature ++</li>
+                <li><strong>ISO STANDARDS</strong> References are made to ISO standards wherever used.</li>
+                <li><strong>DATA EXORT:</strong> Export your project as .csv or send it to another user with .JSON</li>
             </ul>
         </section>
         
         <section id="theme-toggle">
-            <h2>> BRUKERPREFERANSER_</h2>
-            <p>Appen kommer med to grensesnitt. Test dem her:</p>
-            <button class="btn" id="toggle-btn" onclick="toggleTheme()">[ BYTT TIL MODERNE TEMA ]</button>
+            <h2>> USER PREFERENCES_</h2>
+            <p>The app features two interfaces. Try them here:</p>
+            <button class="btn" id="toggle-btn" onclick="toggleTheme()">[ SWITCH TO MODERN THEME ]</button>
         </section>
 
         <footer>
-            <p>> LOGOFF_</p>
-            <p>Varmetilførsel v1.0 | © 2026 Frode Halrynjo</p>
+            <p>Heat Input v2.0 | © 2026 Frode Halrynjo</p>
         </footer>
     </div>
 
@@ -322,10 +340,10 @@ font-size: calc(var(--logo-size) * 0.85);
             
             if(body.classList.contains('modern-theme')) {
                 body.classList.remove('crt');
-                button.innerText = '[ BYTT TIL RETRO TEMA ]';
+                button.innerText = '[ SWITCH TO RETRO THEME ]';
             } else {
                 body.classList.add('crt');
-                button.innerText = '[ BYTT TIL MODERNE TEMA ]';
+                button.innerText = '[ SWITCH TO MODERN THEME ]';
             }
         }
     </script>
