@@ -55,34 +55,70 @@
             z-index: 1;
         }
 
-        /* --- LOGO PLACEHOLDER STIL --- */
-        .logo-placeholder {
-            width: 120px;
-            height: 120px;
-            border: 2px dashed var(--main-color);
+        /* --- HEAT INPUT LOGO (Oversatt fra Kotlin Compose) --- */
+        .heat-input-logo {
+            /* Tilsvarer 'size = 200.dp' fra koden din. Endre denne for å skalere alt! */
+            --logo-size: 140px; 
+            
+            width: var(--logo-size);
+            height: var(--logo-size);
+            background-color: #000; /* showBackground = true */
             display: flex;
             align-items: center;
             justify-content: center;
-            text-align: center;
-            font-size: 0.9em;
             margin-bottom: 30px;
-            box-shadow: 0 0 15px rgba(51, 255, 77, 0.2);
+            
+            /* Sørger for at logoen smelter fint inn i moderne tema */
             transition: all 0.3s ease;
         }
 
-        /* Endrer logo-rammen i moderne tema */
-        body.modern-theme .logo-placeholder {
-            border: 2px solid var(--main-color);
-            border-radius: 20px;
-            box-shadow: none;
+        body.modern-theme .heat-input-logo {
+            background-color: transparent;
         }
-        
-        /* For når du bytter ut med en faktisk bilde-logo senere */
-        .real-logo {
-            max-width: 120px;
-            height: auto;
-            margin-bottom: 30px;
-            display: none; /* Skjult inntil du legger inn bilde */
+
+        .logo-row {
+            display: flex;
+            align-items: flex-end; /* verticalAlignment = Alignment.Bottom */
+            justify-content: center;
+            /* offset(y = -(size * 0.015f)) */
+            transform: translateY(calc(var(--logo-size) * -0.015)); 
+        }
+
+        .logo-q {
+            color: var(--main-color); /* primaryColor */
+            /* fontSize = (size.value * 0.62f).sp */
+            font-size: calc(var(--logo-size) * 0.62); 
+            font-weight: bold;
+            line-height: 0.8; 
+            /* shadow = ... blurRadius = (size.value * 0.08f) */
+            text-shadow: 0 0 calc(var(--logo-size) * 0.08) rgba(51, 255, 77, 0.8);
+        }
+
+        .logo-spacer {
+            /* Spacer(modifier = Modifier.width(size * 0.02f)) */
+            width: calc(var(--logo-size) * 0.02);
+        }
+
+        .logo-cursor {
+            /* width(size * 0.10f) og height(size * 0.17f) */
+            width: calc(var(--logo-size) * 0.10);
+            height: calc(var(--logo-size) * 0.17);
+            background-color: var(--main-color);
+            
+            /* offset(y = -(size * 0.10f)) */
+            transform: translateY(calc(var(--logo-size) * -0.10));
+            
+            /* Simulerer drawBehind spread-effekten med dobbel box-shadow */
+            box-shadow: 0 0 calc(var(--logo-size) * 0.03) rgba(51, 255, 77, 0.8),
+                        0 0 calc(var(--logo-size) * 0.06) rgba(51, 255, 77, 0.4);
+            
+            /* Får cursoren til å blinke */
+            animation: cursorBlink 1s step-end infinite;
+        }
+
+        @keyframes cursorBlink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
         }
 
         /* Typografi */
@@ -97,7 +133,7 @@
             font-size: 1.1em;
         }
 
-        /* Den blinkende markøren */
+        /* Den blinkende markøren for overskriften */
         .cursor {
             display: inline-block;
             width: 12px;
@@ -172,12 +208,16 @@
 <body class="crt">
     <div class="container">
         <header>
-            <!-- LOGO PLACEHOLDER -->
-            <!-- Når du har en logo, kommenter ut div-en under, og bruk img-taggen -->
-            <div class="logo-placeholder">
-                [ LOGO ]<br>HeatInputQ
+            
+            <div class="heat-input-logo">
+                <div class="logo-row">
+                    <div class="logo-q">Q</div>
+                    
+                    <div class="logo-spacer"></div>
+                    
+                    <div class="logo-cursor"></div>
+                </div>
             </div>
-            <!-- <img src="din-logo-fil.png" alt="HeatInput Logo" class="real-logo"> -->
 
             <h1 id="main-title"><span class="cursor"></span></h1>
             <p>Sveiseteknisk presisjon for ditt Kotlin Multiplatform-verktøy. Kodelogikk fra fortiden.</p>
