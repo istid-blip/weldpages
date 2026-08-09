@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Varmetilførsel v1.0 | Sveiseteknisk Presisjon</title>
+    <title>App Portal | Sveiseteknisk Presisjon</title>
     <style>
         /* Importerer lokal Geist Mono fra prosjektmappen */
-
         @font-face {
             font-family: 'Geist';
             src: local('Geist Medium'), local('Geist Medium'),
@@ -50,13 +49,6 @@
             --font-stack: 'Geist Mono';
         }
 
-        /* Moderne Mørkt Tema */
-        body.modern-theme {
-            --bg-color: #121212;
-            --main-color: #E0E0E0;
-            --dim-color: #555555;
-        }
-
         body {
             background-color: var(--bg-color);
             color: var(--main-color);
@@ -90,167 +82,138 @@
             z-index: 1;
         }
 
-/* --- HEAT INPUT LOGO (Oversatt fra Kotlin Compose) --- */
-        .heat-input-logo {
-            /* Tilsvarer 'size = 200.dp' fra koden din. Endre denne for å skalere alt! */
-            --logo-size: 160px; 
-            
+        /* Overskrifter og Tekst */
+        h1, h2, h3 {
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            text-shadow: 0 0 1px var(--main-color);
+        }
+        
+        p {
+            line-height: 1.6;
+            font-size: 1.1em;
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        /* Den blinkende markøren for overskriften */
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 0.35em;
+            background-color: var(--main-color);
+            vertical-align: baseline;
+            animation: none;
+            margin-left: -10px;
+        }
+
+        /* Layout for app-valg */
+        .app-grid {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Retro App-kort */
+        .app-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: var(--main-color);
+            border: 2px solid var(--dim-color);
+            padding: 40px;
+            border-radius: 8px;
+            width: 220px;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 0 5px var(--dim-color);
+            background: transparent;
+        }
+
+        .app-card:hover {
+            border-color: var(--main-color);
+        }
+
+        /* Logo CSS (Tilpasset for både Q og S) */
+        .app-logo {
+            --logo-size: 120px; 
             width: var(--logo-size);
             height: var(--logo-size);
-            background-color: #000; /* showBackground = true */
+            background-color: #000;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 30px;
-            
-            /* Sørger for at logoen smelter fint inn i moderne tema */
+            margin-bottom: 20px;
             transition: all 0.3s ease;
-            position: relative; /* Nødvendig for absolutt posisjonering av cursor */
-        }
-
-        body.modern-theme .heat-input-logo {
-            background-color: transparent;
+            position: relative;
         }
 
         .logo-row {
             display: flex;
-            align-items: flex-end; /* verticalAlignment = Alignment.Bottom */
+            align-items: flex-end;
             justify-content: center;
-            /* offset(y = -(size * 0.015f)) */
             transform: translateY(calc(var(--logo-size) * -0.015)); 
             position: relative;
         }
 
-        .logo-q {
-            color: var(--main-color); /* primaryColor */
-            
+        .logo-letter {
+            color: var(--main-color);
             font-family: 'Geist', sans-serif;
-
-            /* STOR Q: fontSize = (size.value * 0.80f) - Justert opp for å fylle boksen bedre i HTML */
-font-size: calc(var(--logo-size) * 0.85); 
-            font-weight: 700; /* Eller 500 avhengig av hvor tykk du vil ha den */
+            font-size: calc(var(--logo-size) * 0.85); 
+            font-weight: 700;
             line-height: 0.75;
-            
-            /* shadow = ... blurRadius = (size.value * 0.08f) */
             text-shadow: 0 0 calc(var(--logo-size) * 0.08) rgba(51, 255, 77, 0.8);
-            
-            /* Geist Mono kan av og til ha litt ulik baseline, dette sikrer at den står på bunnen */
             margin-bottom: calc(var(--logo-size) * -0.05); 
         }
 
         .logo-cursor {
-            /* Cursor for Input: width(size * 0.10f) og height(size * 0.17f) i koden, 
-               men vi gjør den litt kortere for å matche retro-terminal proporsjoner */
             width: calc(var(--logo-size) * 0.10);
             height: calc(var(--logo-size) * 0.15);
             background-color: var(--main-color);
-            
-            /* PLASSERING NEDE TIL HØYRE: 
-               I stedet for en spacer bruker vi absolutt posisjonering 
-               i forhold til Q-en for å få den akkurat der vi vil ha den. */
             position: absolute;
-            right: calc(var(--logo-size) * -0.08); /* Skyver den til høyre for Q */
-            bottom: calc(var(--logo-size) * -0.14); /* Løfter den litt opp fra den absolutte bunnen */
-            
-            /* Simulerer drawBehind spread-effekten med dobbel box-shadow */
+            right: calc(var(--logo-size) * -0.08);
+            bottom: calc(var(--logo-size) * -0.14);
             box-shadow: 0 0 calc(var(--logo-size) * 0.03) rgba(51, 255, 77, 0.8),
                         0 0 calc(var(--logo-size) * 0.06) rgba(51, 255, 77, 0.4);
-            
-            /* Får cursoren til å blinke */
+            animation: none;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .app-card:hover .logo-cursor {
             animation: cursorBlink 1s step-end infinite;
+            opacity: 1;
         }
 
         @keyframes cursorBlink {
             0%, 100% { opacity: 1; }
             50% { opacity: 0; }
         }
-
-        /* Typografi */
-        h1, h2, h3 {
-            text-transform: uppercase;
-            letter-spacing: -1px;
-            text-shadow: 0 0 1px var(--main-color);
-        }
-
-        p, li {
-            line-height: 1.6;
-            font-size: 1.1em;
-        }
-
-        /* Den blinkende markøren for overskriften */
-        .cursor {
-            display: inline-block;
-            width: 12px;
-            height: 0.9em;
-            background-color: var(--main-color);
-            vertical-align: middle;
-            animation: none;
-            margin-left: 5px;
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-
-        /* Retro Knapper */
+        
         .btn {
             display: inline-block;
             background: transparent;
             color: var(--main-color);
             border: 2px solid var(--main-color);
-            padding: 12px 24px;
+            padding: 10px 20px;
             font-family: var(--font-stack);
-            font-size: 1em;
+            font-size: 0.9em;
             font-weight: bold;
-            text-decoration: none;
             text-transform: uppercase;
-            margin: 15px 10px 15px 0;
             cursor: pointer;
             transition: all 0.2s ease-in-out;
             box-shadow: 0 0 5px var(--dim-color);
+            margin-top: 20px;
         }
 
         .btn:hover {
-            background: var(--main-color);
-            color: var(--bg-color);
-            box-shadow: 0 0 20px var(--main-color);
-        }
-
-        /* Layout for seksjoner */
-        section {
-            margin-bottom: 60px;
-            border-left: 2px solid var(--dim-color);
-            padding-left: 25px;
-        }
-
-        .feature-list {
-            list-style: none;
-            padding: 0;
-        }
-
-        .feature-list li {
-            margin-bottom: 20px;
-        }
-
-        .feature-list li::before {
-            content: "> ";
             color: var(--main-color);
-            font-weight: bold;
-            text-shadow: 0 0 5px var(--main-color);
-        }
-
-        /* Gjenbrukbar responsiv bildeklasse - kan brukes på flere bilder */
-        .responsive-img {
-            display: block;
-            max-width: 100%;
-            height: auto;
-            max-height: 80vh;
-            width: min(720px, calc(var(--logo-size) * 2.8));
-            margin: 18px auto;
-            border-radius: 6px;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.6);
-            object-fit: contain;
+            box-shadow: 0 0 5px var(--dim-color);
         }
 
         footer {
@@ -264,82 +227,59 @@ font-size: calc(var(--logo-size) * 0.85);
 </head>
 <body class="crt">
     <div class="container">
-        <header>
-            
-<div class="heat-input-logo">
-                <div class="logo-row">
-                    <div class="logo-q">Q</div>
-                    <div class="logo-cursor"></div>
-                </div>
-            </div>
-
-            <h1 id="main-title"><span class="cursor"></span></h1>
-            <p>Heat input calculator for the factory floor and office. </p>
-            
-            <div>
-                <a href="#" class="btn">[ DOWNLOAD FOR iOS ]</a>
-            </div>
+        
+        <header class="header-section">
+            <h1 id="main-title">
+                <span id="type-text"></span>
+                <span class="cursor"></span>
+            </h1>
+            <p>Select application to proceed_</p>
         </header>
 
-        <section id="hvorfor" style="margin-top: 60px;">
-            <h2>> Key Features_</h2>
-            <p>Calculation as heat input or arc energy.</p>
-            <img src="bilder/formelfelt.png" alt="Formelfelt" class="responsive-img">
-            <p>Optional pass data: filler, gas, polarity etc.</p>
-            <img src="bilder/strengdata.png" alt="Formelfelt" class="responsive-img">
-            <p>Documentation sent directly to your computer.</p>
-            <img src="bilder/sharingcaring.png" alt="Formelfelt" class="responsive-img">
-        </section>
+        <div class="app-grid">
+            <!-- Heat Input App -->
+            <a href="heat-input.html" class="app-card">
+                <div class="app-logo">
+                    <div class="logo-row">
+                        <div class="logo-letter">Q</div>
+                        <div class="logo-cursor"></div>
+                    </div>
+                </div>
+                <h2>Heat Input</h2>
+            </a>
 
-        <section id="funksjoner">
-            <h2>> Functions_</h2>
-            <ul class="feature-list">
-                <li><strong>STOPWATCH:</strong> Integrated stopwatch. Start the stopwatch when the arc is struck and stop it when the arc is extinguished. The app calculates the heat input or arc energy, and welding speed based on the provided parameters.</li>
-                <img src="bilder/stoppeklokke.png" alt="Formelfelt" class="responsive-img">
-                <li><strong>LOGGING:</strong> Record and log parameters: Voltage (U), Current (I), Time (T), Length (L), K-factor and more for each pass.</li>
-                <li><strong>ISO STANDARDS</strong> References are made to ISO standards wherever used.</li>
-                <li><strong>DATA EXORT:</strong> Export your projects as .csv or send them to other users with .JSON</li>
-            </ul>
-        </section>
+            <!-- Schaeffler App -->
+            <a href="schaeffler.html" class="app-card">
+                <div class="app-logo">
+                    <div class="logo-row">
+                        <div class="logo-letter">S</div>
+                        <div class="logo-cursor"></div>
+                    </div>
+                </div>
+                <h2>Schaeffler</h2>
+            </a>
+        </div>
 
         <footer>
-            <p>Heat Input v2.0 | © 2026 Frode Halrynjo</p>
+            <p>App Portal | © 2026 Frode Halrynjo</p>
         </footer>
     </div>
 
     <script>
-        // JAVASCRIPT LOGIKK
-        
-        // 1. Skrivemaskin-effekt for hovedoverskriften
-        const textElement = document.getElementById('main-title');
-        const textToType = "> HEAT INPUT v 2.0";
+        // Skrivemaskin-effekt for portalen
+        const textElement = document.getElementById('type-text');
+        const textToType = "> APP PORTAL";
         let i = 0;
         
         function typeWriter() {
             if (i < textToType.length) {
-                textElement.innerHTML = textToType.substring(0, i+1) + '<span class="cursor"></span>';
+                textElement.textContent = textToType.substring(0, i + 1);
                 i++;
-                setTimeout(typeWriter, 80); 
+                setTimeout(typeWriter, 100); 
             }
         }
         
         window.onload = typeWriter;
-
-        // 2. Bytt mellom Retro (CRT) og Moderne tema
-        function toggleTheme() {
-            const body = document.body;
-            const button = document.getElementById('toggle-btn');
-            
-            body.classList.toggle('modern-theme');
-            
-            if(body.classList.contains('modern-theme')) {
-                body.classList.remove('crt');
-                button.innerText = '[ SWITCH TO RETRO THEME ]';
-            } else {
-                body.classList.add('crt');
-                button.innerText = '[ SWITCH TO MODERN THEME ]';
-            }
-        }
     </script>
 </body>
 </html>
